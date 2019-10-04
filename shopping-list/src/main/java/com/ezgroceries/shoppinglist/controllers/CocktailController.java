@@ -1,9 +1,13 @@
 package com.ezgroceries.shoppinglist.controllers;
 
+import com.ezgroceries.shoppinglist.clients.CocktailDBClient;
+import com.ezgroceries.shoppinglist.clients.CocktailDBResponse;
 import com.ezgroceries.shoppinglist.resources.CocktailResource;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,24 +21,41 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/cocktails", produces = "application/json")
 public class CocktailController {
 
-    @GetMapping
-    public List<CocktailResource> get(@RequestParam String search) {
-        return getDummyResources();
+    private final CocktailDBClient cocktailDBClient;
+
+    CocktailController(CocktailDBClient cocktailDBClient) {
+        this.cocktailDBClient = cocktailDBClient;
     }
 
-    private List<CocktailResource> getDummyResources() {
-        return Arrays.asList(
-                new CocktailResource(
-                        UUID.fromString("23b3d85a-3928-41c0-a533-6538a71e17c4"), "Margerita",
-                        "Cocktail glass",
-                        "Rub the rim of the glass with the lime slice to make the salt stick to it. Take care to moisten..",
-                        "https://www.thecocktaildb.com/images/media/drink/wpxpvu1439905379.jpg",
-                        Arrays.asList("Tequila", "Triple sec", "Lime juice", "Salt")),
-                new CocktailResource(
-                        UUID.fromString("d615ec78-fe93-467b-8d26-5d26d8eab073"), "Blue Margerita",
-                        "Cocktail glass",
-                        "Rub rim of cocktail glass with lime juice. Dip rim in coarse salt..",
-                        "https://www.thecocktaildb.com/images/media/drink/qtvvyq1439905913.jpg",
-                        Arrays.asList("Tequila", "Blue Curacao", "Lime juice", "Salt")));
+    @GetMapping
+    public List<CocktailResource> get(@RequestParam String search) {
+        CocktailDBResponse dbResponse = cocktailDBClient.searchCocktails(search);
+
+        return dbResponse.getDrinks().stream()
+                .map(drink -> new CocktailResource(
+                        UUID.nameUUIDFromBytes(drink.getIdDrink().getBytes()),
+                        drink.getStrDrink(),
+                        drink.getStrGlass(),
+                        drink.getStrInstructions(),
+                        drink.getStrDrinkThumb(),
+                        Arrays.asList(
+                                drink.getStrIngredient1(),
+                                drink.getStrIngredient2(),
+                                drink.getStrIngredient3(),
+                                drink.getStrIngredient4(),
+                                drink.getStrIngredient5(),
+                                drink.getStrIngredient6(),
+                                drink.getStrIngredient7(),
+                                drink.getStrIngredient8(),
+                                drink.getStrIngredient9(),
+                                drink.getStrIngredient10(),
+                                drink.getStrIngredient11(),
+                                drink.getStrIngredient12(),
+                                drink.getStrIngredient13(),
+                                drink.getStrIngredient14(),
+                                drink.getStrIngredient15()
+                        ).stream().filter(Objects::nonNull).collect(Collectors.toList())
+                ))
+                .collect(Collectors.toList());
     }
 }
