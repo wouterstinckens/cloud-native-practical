@@ -1,6 +1,5 @@
 package com.ezgroceries.shoppinglist.resources;
 
-import com.sun.javafx.beans.IDProperty;
 import java.util.List;
 import java.util.UUID;
 

@@ -3,11 +3,11 @@ package com.ezgroceries.shoppinglist.controllers;
 import com.ezgroceries.shoppinglist.clients.CocktailDBClient;
 import com.ezgroceries.shoppinglist.clients.CocktailDBResponse;
 import com.ezgroceries.shoppinglist.resources.CocktailResource;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,7 +38,7 @@ public class CocktailController {
                         drink.getStrGlass(),
                         drink.getStrInstructions(),
                         drink.getStrDrinkThumb(),
-                        Arrays.asList(
+                        Stream.of(
                                 drink.getStrIngredient1(),
                                 drink.getStrIngredient2(),
                                 drink.getStrIngredient3(),
@@ -54,7 +54,7 @@ public class CocktailController {
                                 drink.getStrIngredient13(),
                                 drink.getStrIngredient14(),
                                 drink.getStrIngredient15()
-                        ).stream().filter(Objects::nonNull).collect(Collectors.toList())
+                        ).filter(Objects::nonNull).collect(Collectors.toList())
                 ))
                 .collect(Collectors.toList());
     }

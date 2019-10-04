@@ -45,14 +45,7 @@ public class ShoppingListApplicationTests {
 	public void testAddCocktailToShoppingList() throws Exception {
 		mockMvc.perform(post("/shopping-lists/97c8e5bd-5353-426e-b57b-69eb2260ace3/cocktails")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content("[\n"
-						+ "    {\n"
-						+ "        \"cocktailId\": \"23b3d85a-3928-41c0-a533-6538a71e17c4\"\n"
-						+ "    },\n"
-						+ "    {\n"
-						+ "        \"cocktailId\": \"d615ec78-fe93-467b-8d26-5d26d8eab073\"\n"
-						+ "    }\n"
-						+ "]"))
+				.content("[{\"cocktailId\": \"23b3d85a-3928-41c0-a533-6538a71e17c4\"},{\"cocktailId\": \"d615ec78-fe93-467b-8d26-5d26d8eab073\"}]"))
 				.andDo(print()).andExpect(status().isOk())
 				.andExpect(MockMvcResultMatchers.content().string(containsString("23b3d85a-3928-41c0-a533-6538a71e17c4")))
 				.andExpect(MockMvcResultMatchers.content().string(containsString("d615ec78-fe93-467b-8d26-5d26d8eab073")));
