@@ -1,4 +1,4 @@
-package com.ezgroceries.shoppinglist.resources;
+package com.ezgroceries.shoppinglist.model;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import java.util.List;
  * @author jd70695 - Wouter Stinckens
  * @since UOC201910
  */
-public class CocktailResource {
+public class Cocktail {
 
     private final String cocktailId;
     private final String name;
@@ -15,7 +15,7 @@ public class CocktailResource {
     private final String image;
     private final List<String> ingredients;
 
-    public CocktailResource(String cocktailId, String name, String glass, String instructions, String image, List<String> ingredients) {
+    public Cocktail(String cocktailId, String name, String glass, String instructions, String image, List<String> ingredients) {
         this.cocktailId = cocktailId;
         this.name = name;
         this.glass = glass;

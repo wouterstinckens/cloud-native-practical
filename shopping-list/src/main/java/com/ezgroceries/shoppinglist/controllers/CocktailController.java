@@ -2,7 +2,7 @@ package com.ezgroceries.shoppinglist.controllers;
 
 import com.ezgroceries.shoppinglist.clients.CocktailDBClient;
 import com.ezgroceries.shoppinglist.clients.CocktailDBResponse;
-import com.ezgroceries.shoppinglist.resources.CocktailResource;
+import com.ezgroceries.shoppinglist.model.Cocktail;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -28,11 +28,11 @@ public class CocktailController {
     }
 
     @GetMapping
-    public List<CocktailResource> get(@RequestParam String search) {
+    public List<Cocktail> get(@RequestParam String search) {
         CocktailDBResponse dbResponse = cocktailDBClient.searchCocktails(search);
 
         return dbResponse.getDrinks().stream()
-                .map(drink -> new CocktailResource(
+                .map(drink -> new Cocktail(
                         drink.getIdDrink(),
                         drink.getStrDrink(),
                         drink.getStrGlass(),

@@ -1,6 +1,6 @@
 package com.ezgroceries.shoppinglist.clients;
 
-import com.ezgroceries.shoppinglist.resources.DrinkResource;
+import com.ezgroceries.shoppinglist.resources.CocktailDBResource;
 import java.util.List;
 
 /**
@@ -10,13 +10,13 @@ import java.util.List;
 
     public class CocktailDBResponse {
 
-    private List<DrinkResource> drinks;
+    private List<CocktailDBResource> drinks;
 
-    public List<DrinkResource> getDrinks() {
+    public List<CocktailDBResource> getDrinks() {
         return drinks;
     }
 
-    public void setDrinks(List<DrinkResource> drinks) {
+    public void setDrinks(List<CocktailDBResource> drinks) {
         this.drinks = drinks;
     }
 

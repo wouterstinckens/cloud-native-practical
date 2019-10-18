@@ -1,4 +1,4 @@
-package com.ezgroceries.shoppinglist.resources;
+package com.ezgroceries.shoppinglist.model;
 
 import java.util.List;
 import java.util.UUID;
@@ -7,13 +7,13 @@ import java.util.UUID;
  * @author jd70695 - Wouter Stinckens
  * @since UOC201910
  */
-public class ShoppingListResource {
+public class ShoppingList {
 
     private UUID shoppingListId;
     private String name;
     private List<String> ingredients;
 
-    public ShoppingListResource(UUID shoppingListId, String name, List<String> ingredients) {
+    public ShoppingList(UUID shoppingListId, String name, List<String> ingredients) {
         this.shoppingListId = shoppingListId;
         this.name = name;
         this.ingredients = ingredients;

@@ -4,7 +4,7 @@ package com.ezgroceries.shoppinglist.resources;
  * @author jd70695 - Wouter Stinckens
  * @since UOC201910
  */
-public class DrinkResource {
+public class CocktailDBResource {
 
     private String idDrink;
     private String strDrink;
