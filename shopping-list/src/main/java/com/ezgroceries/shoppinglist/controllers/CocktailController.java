@@ -23,7 +23,7 @@ public class CocktailController {
 
     private final CocktailDBClient cocktailDBClient;
 
-    CocktailController(@Qualifier("cocktailDBClient") CocktailDBClient cocktailDBClient) {
+    CocktailController(CocktailDBClient cocktailDBClient) {
         this.cocktailDBClient = cocktailDBClient;
     }
 
