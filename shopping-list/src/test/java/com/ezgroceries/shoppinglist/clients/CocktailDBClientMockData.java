@@ -2,19 +2,14 @@ package com.ezgroceries.shoppinglist.clients;
 
 import com.ezgroceries.shoppinglist.resources.DrinkResource;
 import java.util.Arrays;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 
 /**
  * @author jd70695 - Wouter Stinckens
  * @since UOC201910
  */
-@Component
-@Qualifier("cocktailDBClient")
-public class CocktailDBClientMock implements CocktailDBClient {
+public class CocktailDBClientMockData {
 
-    @Override
-    public CocktailDBResponse searchCocktails(String search) {
+    public static CocktailDBResponse mockResponse() {
         CocktailDBResponse response = new CocktailDBResponse();
         DrinkResource drink1 = new DrinkResource();
         drink1.setIdDrink("23b3d85a-3928-41c0-a533-6538a71e17c4");
