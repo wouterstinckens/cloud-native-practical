@@ -2,6 +2,7 @@ package com.ezgroceries.shoppinglist.controllers;
 
 import com.ezgroceries.shoppinglist.model.Cocktail;
 import com.ezgroceries.shoppinglist.model.ShoppingList;
+import com.ezgroceries.shoppinglist.services.ShoppingListService;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -22,34 +23,30 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/shopping-lists")
 public class ShoppingListController {
 
+    private final ShoppingListService shoppingListService;
+
+    public ShoppingListController(ShoppingListService shoppingListService) {
+        this.shoppingListService = shoppingListService;
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ShoppingList createShoppingList(@RequestBody ShoppingList newShoppingList) {
-        return new ShoppingList(
-                UUID.fromString("eb18bb7c-61f3-4c9f-981c-55b1b8ee8915"), newShoppingList.getName(), null);
+        return shoppingListService.create(newShoppingList);
     }
 
     @PostMapping("/{shoppingListId}/cocktails")
-    public List<Cocktail> addCocktails(@PathVariable UUID shoppingListId, @RequestBody List<Cocktail> cocktails) {
-        return cocktails;
+    public void addCocktails(@PathVariable UUID shoppingListId, @RequestBody List<Cocktail> cocktails) {
+        shoppingListService.addCocktailsToShoppingList(shoppingListId, cocktails);
     }
 
     @GetMapping("/{shoppingListId}")
-    public ShoppingList getShoppingList(@PathVariable String shoppingListId) {
-        return new ShoppingList(UUID.fromString("90689338-499a-4c49-af90-f1e73068ad4f"),
-                "Stephanie's birthday",
-                Arrays.asList("Tequila", "Triple sec", "Lime juice", "Salt", "Blue Curacao"));
+    public ShoppingList getShoppingList(@PathVariable UUID shoppingListId) {
+        return shoppingListService.findShoppingListById(shoppingListId);
     }
 
     @GetMapping
     public List<ShoppingList> getShoppingLists() {
-        return Arrays.asList(
-                new ShoppingList(UUID.fromString("4ba92a46-1d1b-4e52-8e38-13cd56c7224c"),
-                        "Stephanie's birthday",
-                        Arrays.asList("Tequila", "Triple sec", "Lime juice", "Salt", "Blue Curacao")),
-                new ShoppingList(UUID.fromString("6c7d09c2-8a25-4d54-a979-25ae779d2465"),
-                        "My Birthday",
-                        Arrays.asList("Tequila", "Triple sec", "Lime juice", "Salt", "Blue Curacao"))
-        );
+        return shoppingListService.findAll();
     }
 }

@@ -1,6 +1,8 @@
 package com.ezgroceries.shoppinglist.model;
 
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author jd70695 - Wouter Stinckens
@@ -8,15 +10,17 @@ import java.util.List;
  */
 public class Cocktail {
 
-    private final String cocktailId;
+    private final UUID id;
+    private final String drinkId;
     private final String name;
     private final String glass;
     private final String instructions;
     private final String image;
-    private final List<String> ingredients;
+    private final Set<String> ingredients;
 
-    public Cocktail(String cocktailId, String name, String glass, String instructions, String image, List<String> ingredients) {
-        this.cocktailId = cocktailId;
+    public Cocktail(UUID id, String drinkId, String name, String glass, String instructions, String image, Set<String> ingredients) {
+        this.id = id;
+        this.drinkId = drinkId;
         this.name = name;
         this.glass = glass;
         this.instructions = instructions;
@@ -24,8 +28,12 @@ public class Cocktail {
         this.ingredients = ingredients;
     }
 
-    public String getCocktailId() {
-        return cocktailId;
+    public UUID getId() {
+        return id;
+    }
+
+    public String getDrinkId() {
+        return drinkId;
     }
 
     public String getName() {
@@ -44,7 +52,7 @@ public class Cocktail {
         return image;
     }
 
-    public List<String> getIngredients() {
+    public Set<String> getIngredients() {
         return ingredients;
     }
 }
