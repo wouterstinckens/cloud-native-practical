@@ -29,7 +29,7 @@ public class ShoppingListService {
     public ShoppingList create(ShoppingList shoppingListResource) {
         ShoppingListEntity entity = new ShoppingListEntity();
         entity.setName(shoppingListResource.getName());
-        shoppingListRepository.save(entity);
+        entity = shoppingListRepository.save(entity);
 
         shoppingListResource.setShoppingListId(entity.getId());
         return shoppingListResource;

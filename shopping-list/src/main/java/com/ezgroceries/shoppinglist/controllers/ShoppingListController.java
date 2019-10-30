@@ -3,7 +3,6 @@ package com.ezgroceries.shoppinglist.controllers;
 import com.ezgroceries.shoppinglist.model.Cocktail;
 import com.ezgroceries.shoppinglist.model.ShoppingList;
 import com.ezgroceries.shoppinglist.services.ShoppingListService;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
