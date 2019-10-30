@@ -1,6 +1,5 @@
 package com.ezgroceries.shoppinglist.clients;
 
-import com.ezgroceries.shoppinglist.resources.CocktailDBResource;
 import java.util.Arrays;
 
 /**

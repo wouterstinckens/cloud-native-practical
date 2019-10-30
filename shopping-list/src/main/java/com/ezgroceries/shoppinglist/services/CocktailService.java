@@ -1,15 +1,15 @@
 package com.ezgroceries.shoppinglist.services;
 
+import com.ezgroceries.shoppinglist.clients.CocktailDBClient;
+import com.ezgroceries.shoppinglist.clients.CocktailDBResource;
 import com.ezgroceries.shoppinglist.clients.CocktailDBResponse;
+import com.ezgroceries.shoppinglist.controllers.model.CocktailDTO;
 import com.ezgroceries.shoppinglist.entities.CocktailEntity;
-import com.ezgroceries.shoppinglist.model.Cocktail;
 import com.ezgroceries.shoppinglist.repositories.CocktailRepository;
-import com.ezgroceries.shoppinglist.resources.CocktailDBResource;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.springframework.stereotype.Service;
@@ -21,13 +21,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class CocktailService {
 
+    private final CocktailDBClient cocktailDBClient;
     private final CocktailRepository cocktailRepository;
 
-    public CocktailService(CocktailRepository cocktailRepository) {
+    public CocktailService(CocktailDBClient cocktailDBClient, CocktailRepository cocktailRepository) {
+        this.cocktailDBClient = cocktailDBClient;
         this.cocktailRepository = cocktailRepository;
     }
 
-    public List<Cocktail> mergeCocktails(CocktailDBResponse cocktailResources) {
+    public List<CocktailDTO> searchCocktails(String search) {
+        CocktailDBResponse dbResponse = cocktailDBClient.searchCocktails(search);
+        return mergeCocktails(dbResponse);
+    }
+
+    public List<CocktailDTO> mergeCocktails(CocktailDBResponse cocktailResources) {
         //Get all the idDrink attributes
         List<String> ids = cocktailResources.getDrinks().stream().map(CocktailDBResource::getIdDrink).collect(Collectors.toList());
 
@@ -52,8 +59,8 @@ public class CocktailService {
         return mergeAndTransform(cocktailResources.getDrinks(), allEntityMap);
     }
 
-    private List<Cocktail> mergeAndTransform(List<CocktailDBResource> cocktails, Map<String, CocktailEntity> allEntityMap) {
-        return cocktails.stream().map(drinkResource -> new Cocktail(allEntityMap.get(drinkResource.getIdDrink()).getId(), drinkResource.getIdDrink(),
+    private List<CocktailDTO> mergeAndTransform(List<CocktailDBResource> cocktails, Map<String, CocktailEntity> allEntityMap) {
+        return cocktails.stream().map(drinkResource -> new CocktailDTO(allEntityMap.get(drinkResource.getIdDrink()).getId(), drinkResource.getIdDrink(),
                 drinkResource.getStrDrink(), drinkResource.getStrGlass(), drinkResource.getStrInstructions(), drinkResource.getStrDrinkThumb(),
                 getIngredients(drinkResource))).collect(Collectors.toList());
     }

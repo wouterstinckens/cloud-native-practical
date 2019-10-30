@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.ezgroceries.shoppinglist.clients.CocktailDBClient;
 import com.ezgroceries.shoppinglist.clients.CocktailDBClientMockData;
-import com.ezgroceries.shoppinglist.model.ShoppingList;
+import com.ezgroceries.shoppinglist.controllers.model.ShoppingListDTO;
 import com.ezgroceries.shoppinglist.services.ShoppingListService;
 import java.util.Arrays;
 import org.junit.Before;
@@ -55,7 +55,7 @@ public class ShoppingListApplicationTests {
 
 	@Test
 	public void testCreateShoppingList() throws Exception {
-		BDDMockito.given(shoppingListService.create(any())).willReturn(new ShoppingList(null, "Stephanie's birthday", null));
+		BDDMockito.given(shoppingListService.create(any())).willReturn(new ShoppingListDTO(null, "Stephanie's birthday", null));
 		mockMvc.perform(post("/shopping-lists")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("{\"name\": \"Stephanie's birthday\"}")).
@@ -74,7 +74,7 @@ public class ShoppingListApplicationTests {
 
 	@Test
 	public void testGetShoppingList() throws Exception {
-		BDDMockito.given(shoppingListService.findShoppingListById(any())).willReturn(new ShoppingList(null, "Stephanie's birthday", null));
+		BDDMockito.given(shoppingListService.findShoppingListById(any())).willReturn(new ShoppingListDTO(null, "Stephanie's birthday", null));
 		mockMvc.perform(get("/shopping-lists/eb18bb7c-61f3-4c9f-981c-55b1b8ee8915"))
 				.andDo(print()).andExpect(status().isOk())
 				.andExpect(MockMvcResultMatchers.content().string(containsString("Stephanie's birthday")));
@@ -83,8 +83,8 @@ public class ShoppingListApplicationTests {
 	@Test
 	public void testGetShoppingLists() throws Exception {
 		BDDMockito.given(shoppingListService.findAll()).willReturn(Arrays.asList(
-				new ShoppingList(null, "Stephanie's birthday", null),
-				new ShoppingList(null, "My Birthday", null)));
+				new ShoppingListDTO(null, "Stephanie's birthday", null),
+				new ShoppingListDTO(null, "My Birthday", null)));
 		mockMvc.perform(get("/shopping-lists"))
 				.andDo(print()).andExpect(status().isOk())
 				.andExpect(MockMvcResultMatchers.content().string(containsString("Stephanie's birthday")))

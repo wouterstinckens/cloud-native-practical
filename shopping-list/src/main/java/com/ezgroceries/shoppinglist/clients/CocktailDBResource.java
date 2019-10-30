@@ -1,4 +1,4 @@
-package com.ezgroceries.shoppinglist.resources;
+package com.ezgroceries.shoppinglist.clients;
 
 /**
  * @author jd70695 - Wouter Stinckens

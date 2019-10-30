@@ -5,10 +5,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.ezgroceries.shoppinglist.controllers.model.CocktailDTO;
+import com.ezgroceries.shoppinglist.controllers.model.ShoppingListDTO;
 import com.ezgroceries.shoppinglist.entities.CocktailEntity;
 import com.ezgroceries.shoppinglist.entities.ShoppingListEntity;
-import com.ezgroceries.shoppinglist.model.Cocktail;
-import com.ezgroceries.shoppinglist.model.ShoppingList;
 import com.ezgroceries.shoppinglist.repositories.CocktailRepository;
 import com.ezgroceries.shoppinglist.repositories.ShoppingListRepository;
 import com.ezgroceries.shoppinglist.services.ShoppingListService;
@@ -47,7 +47,7 @@ public class ShoppingListServiceTest {
         entity.setId(identifier);
         when(shoppingListRepository.save(any())).thenReturn(entity);
 
-        ShoppingList shoppingList = new ShoppingList(null, "My shopping list", null);
+        ShoppingListDTO shoppingList = new ShoppingListDTO(null, "My shopping list", null);
         shoppingList = shoppingListService.create(shoppingList);
 
         assertEquals(identifier, shoppingList.getShoppingListId());
@@ -66,7 +66,7 @@ public class ShoppingListServiceTest {
         shoppingListEntity.setCocktails(new ArrayList<>());
         when(shoppingListRepository.findById(any())).thenReturn(Optional.of(shoppingListEntity));
 
-        Cocktail cocktail = new Cocktail(cocktailId, null, null, null, null, null, null);
+        CocktailDTO cocktail = new CocktailDTO(cocktailId, null, null, null, null, null, null);
         shoppingListService.addCocktailsToShoppingList(shoppingListID, Collections.singletonList(cocktail));
 
         assertEquals(shoppingListEntity.getCocktails().get(0).getId(), cocktailId);
@@ -86,7 +86,7 @@ public class ShoppingListServiceTest {
 
         when(shoppingListRepository.findById(shoppingListID)).thenReturn(Optional.of(shoppingListEntity));
 
-        ShoppingList shoppingList = shoppingListService.findShoppingListById(shoppingListID);
+        ShoppingListDTO shoppingList = shoppingListService.findShoppingListById(shoppingListID);
 
         assertEquals(shoppingList.getShoppingListId(), shoppingListID);
         assertEquals(shoppingList.getIngredients(), new HashSet<>(Arrays.asList("ingr1", "ingr2", "ingr3")));
@@ -106,7 +106,7 @@ public class ShoppingListServiceTest {
 
         when(shoppingListRepository.findAll()).thenReturn(Collections.singletonList(shoppingListEntity));
 
-        List<ShoppingList> shoppingList = shoppingListService.findAll();
+        List<ShoppingListDTO> shoppingList = shoppingListService.findAll();
 
         assertEquals(shoppingList.get(0).getShoppingListId(), shoppingListID);
         assertEquals(shoppingList.get(0).getIngredients(), new HashSet<>(Arrays.asList("ingr1", "ingr2", "ingr3")));

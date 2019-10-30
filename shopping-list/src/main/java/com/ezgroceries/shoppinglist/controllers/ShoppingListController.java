@@ -1,7 +1,7 @@
 package com.ezgroceries.shoppinglist.controllers;
 
-import com.ezgroceries.shoppinglist.model.Cocktail;
-import com.ezgroceries.shoppinglist.model.ShoppingList;
+import com.ezgroceries.shoppinglist.controllers.model.CocktailDTO;
+import com.ezgroceries.shoppinglist.controllers.model.ShoppingListDTO;
 import com.ezgroceries.shoppinglist.services.ShoppingListService;
 import java.util.List;
 import java.util.UUID;
@@ -30,22 +30,22 @@ public class ShoppingListController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ShoppingList createShoppingList(@RequestBody ShoppingList newShoppingList) {
+    public ShoppingListDTO createShoppingList(@RequestBody ShoppingListDTO newShoppingList) {
         return shoppingListService.create(newShoppingList);
     }
 
     @PostMapping("/{shoppingListId}/cocktails")
-    public void addCocktails(@PathVariable UUID shoppingListId, @RequestBody List<Cocktail> cocktails) {
+    public void addCocktails(@PathVariable UUID shoppingListId, @RequestBody List<CocktailDTO> cocktails) {
         shoppingListService.addCocktailsToShoppingList(shoppingListId, cocktails);
     }
 
     @GetMapping("/{shoppingListId}")
-    public ShoppingList getShoppingList(@PathVariable UUID shoppingListId) {
+    public ShoppingListDTO getShoppingList(@PathVariable UUID shoppingListId) {
         return shoppingListService.findShoppingListById(shoppingListId);
     }
 
     @GetMapping
-    public List<ShoppingList> getShoppingLists() {
+    public List<ShoppingListDTO> getShoppingLists() {
         return shoppingListService.findAll();
     }
 }

@@ -1,9 +1,9 @@
 package com.ezgroceries.shoppinglist.services;
 
+import com.ezgroceries.shoppinglist.controllers.model.CocktailDTO;
+import com.ezgroceries.shoppinglist.controllers.model.ShoppingListDTO;
 import com.ezgroceries.shoppinglist.entities.CocktailEntity;
 import com.ezgroceries.shoppinglist.entities.ShoppingListEntity;
-import com.ezgroceries.shoppinglist.model.Cocktail;
-import com.ezgroceries.shoppinglist.model.ShoppingList;
 import com.ezgroceries.shoppinglist.repositories.CocktailRepository;
 import com.ezgroceries.shoppinglist.repositories.ShoppingListRepository;
 import java.util.List;
@@ -26,7 +26,7 @@ public class ShoppingListService {
         this.shoppingListRepository = shoppingListRepository;
     }
 
-    public ShoppingList create(ShoppingList shoppingListResource) {
+    public ShoppingListDTO create(ShoppingListDTO shoppingListResource) {
         ShoppingListEntity entity = new ShoppingListEntity();
         entity.setName(shoppingListResource.getName());
         entity = shoppingListRepository.save(entity);
@@ -35,27 +35,27 @@ public class ShoppingListService {
         return shoppingListResource;
     }
 
-    public void addCocktailsToShoppingList(UUID shoppingListId, List<Cocktail> cocktails) {
+    public void addCocktailsToShoppingList(UUID shoppingListId, List<CocktailDTO> cocktails) {
         List<CocktailEntity> cocktailEntities =
-                (List<CocktailEntity>) cocktailRepository.findAllById(cocktails.stream().map(Cocktail::getId).collect(Collectors.toList()));
+                (List<CocktailEntity>) cocktailRepository.findAllById(cocktails.stream().map(CocktailDTO::getId).collect(Collectors.toList()));
         shoppingListRepository.findById(shoppingListId).ifPresent(shoppingListEntity -> {
             shoppingListEntity.getCocktails().addAll(cocktailEntities);
             shoppingListRepository.save(shoppingListEntity);
         });
     }
 
-    public ShoppingList findShoppingListById(UUID shoppingListId) {
+    public ShoppingListDTO findShoppingListById(UUID shoppingListId) {
         return shoppingListRepository.findById(shoppingListId)
-                .map(shoppingListEntity -> new ShoppingList(shoppingListEntity.getId(), shoppingListEntity.getName(),
+                .map(shoppingListEntity -> new ShoppingListDTO(shoppingListEntity.getId(), shoppingListEntity.getName(),
                         shoppingListEntity.getCocktails().stream().flatMap(
                                 cocktailEntity -> cocktailEntity.getIngredients().stream()).collect(Collectors.toSet())))
                 .orElseThrow(() -> new Error("No shopping list found with UUID: " + shoppingListId));
     }
 
-    public List<ShoppingList> findAll() {
+    public List<ShoppingListDTO> findAll() {
         List<ShoppingListEntity> entities = (List<ShoppingListEntity>) shoppingListRepository.findAll();
         return entities.stream()
-                .map(shoppingListEntity -> new ShoppingList(shoppingListEntity.getId(), shoppingListEntity.getName(),
+                .map(shoppingListEntity -> new ShoppingListDTO(shoppingListEntity.getId(), shoppingListEntity.getName(),
                         shoppingListEntity.getCocktails().stream().flatMap(
                                 cocktailEntity -> cocktailEntity.getIngredients().stream()).collect(Collectors.toSet())))
                 .collect(Collectors.toList());

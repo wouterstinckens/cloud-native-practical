@@ -1,6 +1,5 @@
-package com.ezgroceries.shoppinglist.model;
+package com.ezgroceries.shoppinglist.controllers.model;
 
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -8,7 +7,7 @@ import java.util.UUID;
  * @author jd70695 - Wouter Stinckens
  * @since UOC201910
  */
-public class Cocktail {
+public class CocktailDTO {
 
     private final UUID id;
     private final String drinkId;
@@ -18,7 +17,7 @@ public class Cocktail {
     private final String image;
     private final Set<String> ingredients;
 
-    public Cocktail(UUID id, String drinkId, String name, String glass, String instructions, String image, Set<String> ingredients) {
+    public CocktailDTO(UUID id, String drinkId, String name, String glass, String instructions, String image, Set<String> ingredients) {
         this.id = id;
         this.drinkId = drinkId;
         this.name = name;

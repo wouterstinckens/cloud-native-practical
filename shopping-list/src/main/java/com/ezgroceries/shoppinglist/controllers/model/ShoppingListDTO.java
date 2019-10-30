@@ -1,4 +1,4 @@
-package com.ezgroceries.shoppinglist.model;
+package com.ezgroceries.shoppinglist.controllers.model;
 
 import java.util.Set;
 import java.util.UUID;
@@ -7,13 +7,13 @@ import java.util.UUID;
  * @author jd70695 - Wouter Stinckens
  * @since UOC201910
  */
-public class ShoppingList {
+public class ShoppingListDTO {
 
     private UUID shoppingListId;
     private String name;
     private Set<String> ingredients;
 
-    public ShoppingList(UUID shoppingListId, String name, Set<String> ingredients) {
+    public ShoppingListDTO(UUID shoppingListId, String name, Set<String> ingredients) {
         this.shoppingListId = shoppingListId;
         this.name = name;
         this.ingredients = ingredients;
